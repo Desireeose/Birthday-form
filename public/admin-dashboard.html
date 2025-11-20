@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f3f7;
+            padding: 40px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+        }
+
+        th {
+            background: #343a40;
+            color: white;
+            padding: 12px;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background: #f1f5fb;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>All Submitted Birthday Information</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Surname</th>
+                <th>Date of Birth</th>
+                <th>Church Department</th>
+                <th>School Department</th>
+            </tr>
+        </thead>
+        <tbody id="dataRows"></tbody>
+    </table>
+
+    <script>
+        async function loadData() {
+            const res = await fetch("/admin-data");
+            const data = await res.json();
+
+            const table = document.getElementById("dataRows");
+            table.innerHTML = "";
+
+            data.forEach(row => {
+                table.innerHTML += `
+                    <tr>
+                        <td>${row.firstName}</td>
+                        <td>${row.surname}</td>
+                        <td>${row.dob}</td>
+                        <td>${row.churchDepartment}</td>
+                        <td>${row.schoolDepartment}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        loadData();
+    </script>
+
+</body>
+</html>
